@@ -16,6 +16,9 @@ public class RateLimiter {
     public RateLimiter(int capacity, int replenishmentSpeed) {
         this.replenishmentSpeed = replenishmentSpeed;
         this.tokenBucket = new ArrayBlockingQueue<>(capacity);
+        for (int i = 0; i < capacity; i++) {
+            this.tokenBucket.add(UUID.randomUUID().toString());
+        }
         Thread daemonThread = new Thread(new Replenisher());
         daemonThread.setDaemon(true);
         daemonThread.start();
